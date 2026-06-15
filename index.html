@@ -3,99 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="scalplayer-version" content="finder-v2.1">
-  <title>ScalpLayer Finder v2.1</title>
+  <meta name="scalplayer-version" content="finder-v2.2">
+  <title>ScalpLayer Finder v2.2</title>
   <style>
     :root {
-      --bg: #05070d; --panel: #10131c; --panel2: #151a25; --line: rgba(212,175,55,.28);
-      --gold: #d4af37; --gold2: #f7dc75; --text: #f8fafc; --muted: #b8c0cc;
-      --green: #22c55e; --red: #ef4444; --yellow: #facc15; --blue: #60a5fa;
+      --bg:#05070d; --panel:#10131c; --line:rgba(212,175,55,.28);
+      --gold:#d4af37; --gold2:#f7dc75; --text:#f8fafc; --muted:#b8c0cc;
+      --green:#22c55e; --red:#ef4444; --yellow:#facc15;
     }
-    * { box-sizing: border-box; }
+    * { box-sizing:border-box; }
     body {
-      margin: 0; min-height: 100vh; padding: 20px; color: var(--text);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, rgba(212,175,55,.18), transparent 28%), linear-gradient(180deg, #141925, var(--bg) 46%);
-      line-height: 1.65;
+      margin:0; min-height:100vh; padding:20px; color:var(--text);
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:radial-gradient(circle at top left,rgba(212,175,55,.18),transparent 28%),linear-gradient(180deg,#141925,var(--bg) 46%);
+      line-height:1.65;
     }
-    .container { max-width: 1220px; margin: 0 auto; }
-    .hero { text-align: center; padding: 12px 0 24px; }
-    h1 { margin: 0; font-size: 32px; letter-spacing: .02em; }
-    h2 { margin: 0 0 14px; color: var(--gold2); font-size: 21px; }
-    h3 { margin: 18px 0 8px; }
-    .sub, .small { color: var(--muted); font-size: 13px; }
+    .container { max-width:1220px; margin:0 auto; }
+    .hero { text-align:center; padding:12px 0 24px; }
+    h1 { margin:0; font-size:32px; letter-spacing:.02em; }
+    h2 { margin:0 0 14px; color:var(--gold2); font-size:21px; }
+    h3 { margin:18px 0 8px; }
+    .sub,.small { color:var(--muted); font-size:13px; }
     .card {
-      background: rgba(16,19,28,.96); border: 1px solid var(--line); border-radius: 14px;
-      padding: 20px; margin-bottom: 18px; box-shadow: 0 18px 38px rgba(0,0,0,.32); overflow: hidden;
+      background:rgba(16,19,28,.96); border:1px solid var(--line); border-radius:14px;
+      padding:20px; margin-bottom:18px; box-shadow:0 18px 38px rgba(0,0,0,.32); overflow:hidden;
     }
-    .notice { background: rgba(212,175,55,.09); color: #f8e7a2; }
-    label { display:block; margin: 8px 0 6px; color: var(--muted); font-weight: 800; }
-    input, select, button {
-      width: 100%; min-height: 48px; border-radius: 10px; border: 1px solid rgba(212,175,55,.38);
-      background: #070a11; color: var(--text); padding: 12px 14px; font-size: 15px; margin-bottom: 10px;
+    .notice { background:rgba(212,175,55,.09); color:#f8e7a2; }
+    label { display:block; margin:8px 0 6px; color:var(--muted); font-weight:800; }
+    input,button {
+      width:100%; min-height:48px; border-radius:10px; border:1px solid rgba(212,175,55,.38);
+      background:#070a11; color:var(--text); padding:12px 14px; font-size:15px; margin-bottom:10px;
     }
-    button { border: 0; background: linear-gradient(135deg, var(--gold), #9f7d1d); color: #111827; font-weight: 950; cursor: pointer; }
-    button:disabled { opacity: .45; cursor: not-allowed; }
-    .grid { display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-    .two { display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .stat { background: rgba(5,7,13,.68); border: 1px solid rgba(212,175,55,.22); border-radius: 12px; padding: 14px; }
-    .stat span { display:block; color: var(--muted); font-size: 13px; }
-    .stat strong { display:block; font-size: 22px; margin-top: 4px; overflow-wrap: anywhere; }
-    .judgement { border: 1px solid rgba(34,197,94,.34); background: rgba(34,197,94,.10); }
-    .judgement strong { font-size: 28px; }
-    .tableWrap { overflow-x:auto; margin-top: 10px; }
-    table { width:100%; border-collapse: collapse; min-width: 860px; }
-    th, td { border-bottom: 1px solid rgba(148,163,184,.16); padding: 9px 8px; text-align:left; font-size: 13px; vertical-align: top; }
-    th { color:#fff; background: rgba(5,7,13,.92); position: sticky; top: 0; }
-    .heat-high { background: rgba(34,197,94,.20); color:#d9fbe4; font-weight:900; }
-    .heat-mid { background: rgba(250,204,21,.16); color:#fff3b0; font-weight:900; }
-    .heat-low { background: rgba(239,68,68,.17); color:#ffd2d2; font-weight:900; }
+    button { border:0; background:linear-gradient(135deg,var(--gold),#9f7d1d); color:#111827; font-weight:950; cursor:pointer; }
+    button:disabled { opacity:.45; cursor:not-allowed; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .two { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .stat { background:rgba(5,7,13,.68); border:1px solid rgba(212,175,55,.22); border-radius:12px; padding:14px; }
+    .stat span { display:block; color:var(--muted); font-size:13px; }
+    .stat strong { display:block; font-size:22px; margin-top:4px; overflow-wrap:anywhere; }
+    .judgement { border-color:rgba(34,197,94,.34); background:rgba(34,197,94,.10); }
+    .judgement strong { font-size:28px; }
+    .tableWrap { overflow-x:auto; margin-top:10px; }
+    table { width:100%; border-collapse:collapse; min-width:880px; }
+    th,td { border-bottom:1px solid rgba(148,163,184,.16); padding:9px 8px; text-align:left; font-size:13px; vertical-align:top; }
+    th { color:#fff; background:rgba(5,7,13,.92); position:sticky; top:0; }
     .pill { display:inline-block; padding:4px 8px; border-radius:999px; border:1px solid rgba(212,175,55,.28); background:rgba(212,175,55,.12); color:#f7e6a5; margin:2px; white-space:nowrap; }
     .good { color:#bbf7d0; font-weight:900; } .bad { color:#fecaca; font-weight:900; } .warn { color:#fde68a; font-weight:900; }
-    details { background: rgba(5,7,13,.48); border:1px solid rgba(212,175,55,.20); border-radius:12px; padding:12px; margin-top:12px; }
-    summary { cursor:pointer; font-weight:900; }
-    @media (max-width: 760px) {
-      body { padding: 12px; } h1 { font-size: 25px; } .card { padding: 16px; border-radius: 12px; }
-      .grid, .two { grid-template-columns: 1fr; } table { min-width: 820px; }
+    .heat-high { background:rgba(34,197,94,.20); color:#d9fbe4; font-weight:900; }
+    .heat-mid { background:rgba(250,204,21,.16); color:#fff3b0; font-weight:900; }
+    .heat-low { background:rgba(239,68,68,.17); color:#ffd2d2; font-weight:900; }
+    @media (max-width:760px) {
+      body { padding:12px; } h1 { font-size:25px; } .card { padding:16px; border-radius:12px; }
+      .grid,.two { grid-template-columns:1fr; } table { min-width:820px; }
     }
   </style>
 </head>
 <body>
   <main class="container">
     <section class="hero">
-      <h1>ScalpLayer Finder v2.1</h1>
-      <p class="sub">USDJPY M1 CSVだけから、新しいBUY/SELL売買ポイント候補を発見する研究専用ツールです。</p>
+      <h1>ScalpLayer Finder v2.2</h1>
+      <p class="sub">v2.1で見つかった有望候補を固定Core Ruleとして検証し、本体移植できるか確認します。</p>
     </section>
 
     <section class="card notice">
-      このツールはリアルタイム売買判定ではありません。既存のScalpLayer本体サイン、session_layer.json、strategy_runtime.json、trade_log.csv等は使いません。
+      入力はUSDJPY M1 CSVだけです。JSON読込はありません。この版は新条件探索ではなく、Core Rule A〜D / SELL Rule Aの安定性検証用です。
     </section>
 
     <section class="card">
-      <h2>① USDJPY M1 CSV読み込み</h2>
-      <div class="two">
-        <div>
-          <label for="csvFile">USDJPY M1 CSV</label>
-          <input id="csvFile" type="file" accept=".csv,text/csv">
-        </div>
-        <div>
-          <label for="rankHorizon">ランキング基準</label>
-          <select id="rankHorizon">
-            <option value="30">30分後</option>
-            <option value="15">15分後</option>
-            <option value="10">10分後</option>
-            <option value="5">5分後</option>
-            <option value="3">3分後</option>
-            <option value="1">1分後</option>
-          </select>
-        </div>
-      </div>
-      <button id="runBtn" onclick="runFinder()">Finder v2.1 分析実行</button>
-      <div id="status" class="small">CSVを選択してください。重い処理中は進捗を表示します。</div>
+      <h2>1. CSV読み込み</h2>
+      <label for="csvFile">USDJPY M1 CSV</label>
+      <input id="csvFile" type="file" accept=".csv,text/csv">
+      <button id="runBtn" onclick="runFinder()">Finder v2.2 検証実行</button>
+      <div id="status" class="small">CSVを選択してください。</div>
     </section>
 
     <section class="card">
-      <h2>② データ概要</h2>
+      <h2>2. データ概要</h2>
       <div id="summary" class="grid">
         <div class="stat"><span>読み込み本数</span><strong>--</strong></div>
         <div class="stat"><span>期間</span><strong>--</strong></div>
@@ -105,57 +88,20 @@
     </section>
 
     <section class="card judgement">
-      <h2>③ Final Finder Judgement</h2>
-      <div id="finalJudgement"><strong>未判定</strong><br><span class="small">分析後に表示します。</span></div>
+      <h2>Final Judgement</h2>
+      <div id="finalJudgement"><strong>未判定</strong><br><span class="small">検証後に表示します。</span></div>
     </section>
 
+    <section class="card"><h2>3. Core Rule検証</h2><div id="coreRuleResults" class="tableWrap small">--</div></section>
+    <section class="card"><h2>4. 時間別安定性</h2><div id="timeStability" class="tableWrap small">--</div></section>
+    <section class="card"><h2>5. 曜日別安定性</h2><div id="weekdayStability" class="tableWrap small">--</div></section>
+    <section class="card"><h2>6. Walk Forward Test</h2><div id="walkForwardResults" class="tableWrap small">--</div></section>
+    <section class="card"><h2>7. TP/SL比較</h2><div id="tpSlResults" class="tableWrap small">--</div></section>
+    <section class="card"><h2>8. 実戦向きランキング</h2><div id="practicalRanking" class="tableWrap small">--</div></section>
+    <section class="card"><h2>9. ScalpLayer本体移植案</h2><div id="integrationPlan" class="small">--</div></section>
     <section class="card">
-      <h2>④ BUY有利条件 TOP20</h2>
-      <div id="bestBuy" class="tableWrap small">分析後に表示します。</div>
-    </section>
-
-    <section class="card">
-      <h2>⑤ SELL有利条件 TOP20</h2>
-      <div id="bestSell" class="tableWrap small">分析後に表示します。</div>
-    </section>
-
-    <section class="card">
-      <h2>⑥ 組み合わせ条件 TOP50</h2>
-      <p class="small">単独条件の上位から2条件・3条件を探索します。件数30未満は採用候補から除外します。</p>
-      <div id="comboRanking" class="tableWrap small">分析後に表示します。</div>
-    </section>
-
-    <section class="card">
-      <h2>⑦ Core Candidate</h2>
-      <div id="coreCandidate" class="tableWrap small">分析後に表示します。</div>
-      <h2 style="margin-top:20px;">Core Entry Candidate TOP10</h2>
-      <div class="two">
-        <div>
-          <h3>BUY候補</h3>
-          <div id="buyCandidates" class="tableWrap small">--</div>
-        </div>
-        <div>
-          <h3>SELL候補</h3>
-          <div id="sellCandidates" class="tableWrap small">--</div>
-        </div>
-      </div>
-      <div id="candidateTop10" class="tableWrap small">分析後に表示します。</div>
-    </section>
-
-    <section class="card">
-      <h2>⑧ バックテスト結果</h2>
-      <div id="backtestResults" class="tableWrap small">分析後に表示します。</div>
-    </section>
-
-    <section class="card">
-      <h2>⑨ Walk Forward Test</h2>
-      <div id="walkForwardResults" class="tableWrap small">分析後に表示します。</div>
-    </section>
-
-    <section class="card">
-      <h2>⑩ finder_results.json 出力</h2>
-      <p class="small">finder_results.json だけをChatGPTへ渡せば、分析結果・候補・バックテスト・Walk Forwardを相談できます。</p>
-      <button id="downloadBtn" onclick="downloadJson()" disabled>finder_results.json をダウンロード</button>
+      <h2>10. finder_results_v2_2.json 出力</h2>
+      <button id="downloadBtn" onclick="downloadJson()" disabled>finder_results_v2_2.json をダウンロード</button>
     </section>
   </main>
 
@@ -164,17 +110,55 @@
     const RSI_PERIOD = 14;
     const EMA_PERIOD = 20;
     const BB_PERIOD = 20;
-    const HORIZONS = [1, 3, 5, 10, 15, 30];
+    const SESSIONS = ["東京", "ロンドン前半", "ロンドン後半", "NY前半", "NY後半", "深夜"];
+    const WEEKDAYS = ["月曜", "火曜", "水曜", "木曜", "金曜"];
     const TP_SL_SETS = [
-      { name: "30分後決済", type: "hold30" },
-      { name: "TP3 SL3", tp: 3, sl: 3 },
-      { name: "TP5 SL5", tp: 5, sl: 5 },
-      { name: "TP5 SL3", tp: 5, sl: 3 },
-      { name: "TP8 SL5", tp: 8, sl: 5 },
-      { name: "TP10 SL5", tp: 10, sl: 5 }
+      { name:"30分後決済", type:"hold30" },
+      { name:"TP3 SL3", tp:3, sl:3 },
+      { name:"TP5 SL5", tp:5, sl:5 },
+      { name:"TP5 SL3", tp:5, sl:3 },
+      { name:"TP8 SL5", tp:8, sl:5 },
+      { name:"TP10 SL5", tp:10, sl:5 }
     ];
     const SPREADS = [0, 1, 2];
-    let finderResults = null;
+    const CORE_RULES = [
+      {
+        name:"Core Rule A",
+        direction:"buy",
+        label:"RSI<30 + 直近10本<=-12",
+        conditions:["RSI < 30", "直近10本pips <= -12"],
+        match:e => e.bar.rsi < 30 && e.bar.recent10 <= -12
+      },
+      {
+        name:"Core Rule B",
+        direction:"buy",
+        label:"RSI<30 + NY後半 + 陰線",
+        conditions:["RSI < 30", "時間帯 = NY後半", "ローソク = 陰線"],
+        match:e => e.bar.rsi < 30 && e.bar.session === "NY後半" && e.bar.candleType === "陰線"
+      },
+      {
+        name:"Core Rule C",
+        direction:"buy",
+        label:"RSI<30 + NY後半 + ボラ0〜1",
+        conditions:["RSI < 30", "時間帯 = NY後半", "ボラ = 0〜1"],
+        match:e => e.bar.rsi < 30 && e.bar.session === "NY後半" && e.bar.volBucket === "0〜1"
+      },
+      {
+        name:"Core Rule D",
+        direction:"buy",
+        label:"RSI<30 + 直近10本-8〜-4 + 通常",
+        conditions:["RSI < 30", "直近10本pips = -8〜-4", "急騰急落 = 通常"],
+        match:e => e.bar.rsi < 30 && e.bar.recent10 > -8 && e.bar.recent10 <= -4 && e.bar.surgeType === "通常"
+      },
+      {
+        name:"SELL Rule A",
+        direction:"sell",
+        label:"RSI>70 + NY前半 + 上バンド付近",
+        conditions:["RSI > 70", "時間帯 = NY前半", "BB位置 = 上バンド付近"],
+        match:e => e.bar.rsi > 70 && e.bar.session === "NY前半" && e.bar.bbPosition === "上バンド付近"
+      }
+    ];
+    let resultJson = null;
 
     async function runFinder() {
       const file = document.getElementById("csvFile").files[0];
@@ -191,63 +175,47 @@
         await breathe();
         enrichBars(parsed.bars);
         const entries = buildEntries(parsed.bars);
-        if (!entries.length) throw new Error("解析対象本数が0です。CSVの時刻順やOHLC列を確認してください。");
-        setStatus(`${entries.length.toLocaleString()}本をBUY/SELL両方向で検証中...`);
+        setStatus("Core Ruleを検証中...");
         await breathe();
-        const rankHorizon = Number(document.getElementById("rankHorizon").value || 30);
-        const splitIndex = Math.floor(entries.length * 0.7);
-        const trainEntries = entries.slice(0, splitIndex);
-        const testEntries = entries.slice(splitIndex);
-        const conditionRanking = [
-          ...aggregateSingle(trainEntries, "buy", rankHorizon),
-          ...aggregateSingle(trainEntries, "sell", rankHorizon)
-        ].sort(rankSort);
-        setStatus("2条件・3条件の組み合わせを探索中...");
-        await breathe();
-        const combinationRanking = [
-          ...aggregateCombinations(trainEntries, "buy", rankHorizon, conditionRanking),
-          ...aggregateCombinations(trainEntries, "sell", rankHorizon, conditionRanking)
-        ].filter(isTradable).sort(rankSort).slice(0, 50);
-        const bestBuyConditions = conditionRanking.filter(r => r.direction === "buy" && r.count >= 30).slice(0, 20);
-        const bestSellConditions = conditionRanking.filter(r => r.direction === "sell" && r.count >= 30).slice(0, 20);
-        setStatus("Core Entry Candidate TOP10を生成中...");
-        await breathe();
-        const candidateTop10 = buildCandidatesV21([...combinationRanking, ...conditionRanking], entries).slice(0, 10);
-        const backtestResults = buildBacktests(candidateTop10, entries, parsed.bars);
-        const walkForwardResults = buildWalkForward(candidateTop10, trainEntries, testEntries);
-        const finalJudgement = judgeFinalV21(candidateTop10, walkForwardResults);
-        const warnings = buildWarningsV21(candidateTop10, walkForwardResults);
-        finderResults = {
+        const coreRuleResults = CORE_RULES.map(rule => evaluateRule(rule, entries));
+        const timeStability = CORE_RULES.flatMap(rule => SESSIONS.map(session => evaluateRule(rule, entries.filter(e => e.bar.session === session), session)));
+        const weekdayStability = CORE_RULES.flatMap(rule => WEEKDAYS.map(day => evaluateRule(rule, entries.filter(e => e.bar.weekday === day), day)));
+        const split = Math.floor(entries.length * 0.7);
+        const train = entries.slice(0, split);
+        const test = entries.slice(split);
+        const walkForwardResults = CORE_RULES.map(rule => buildWalkForward(rule, train, test));
+        const tpSlResults = CORE_RULES.flatMap(rule => buildTpSl(rule, entries, parsed.bars));
+        const practicalRanking = buildPracticalRanking(coreRuleResults, walkForwardResults, tpSlResults);
+        const integrationPlan = buildIntegrationPlan(practicalRanking);
+        const finalJudgement = buildFinalJudgement(practicalRanking);
+        const warnings = buildWarnings(coreRuleResults, walkForwardResults);
+        resultJson = {
           meta: {
-            appVersion: "finder-v2.1",
-            symbol: "USDJPY",
-            timeframe: "M1",
-            sourceFileName: file.name,
-            generatedAt: new Date().toISOString(),
-            loadedRows: parsed.loadedRows,
-            validBars: parsed.bars.length,
-            missingRows: parsed.missingRows,
-            startTime: formatDateTime(parsed.bars[0].time),
-            endTime: formatDateTime(parsed.bars[parsed.bars.length - 1].time),
-            analyzedBars: entries.length,
-            rankHorizon
+            appVersion:"finder-v2.2",
+            symbol:"USDJPY",
+            timeframe:"M1",
+            sourceFileName:file.name,
+            generatedAt:new Date().toISOString(),
+            loadedRows:parsed.loadedRows,
+            validBars:parsed.bars.length,
+            missingRows:parsed.missingRows,
+            startTime:formatDateTime(parsed.bars[0].time),
+            endTime:formatDateTime(parsed.bars[parsed.bars.length - 1].time),
+            analyzedBars:entries.length
           },
-          bestBuyConditions,
-          bestSellConditions,
-          conditionRanking: conditionRanking.slice(0, 160),
-          combinationRanking,
-          coreCandidate: candidateTop10[0] || null,
-          buyCandidates: candidateTop10.filter(c => c.direction === "BUY"),
-          sellCandidates: candidateTop10.filter(c => c.direction === "SELL"),
-          candidateTop10,
-          backtestResults,
+          coreRuleResults,
+          timeStability,
+          weekdayStability,
           walkForwardResults,
+          tpSlResults,
+          practicalRanking,
+          integrationPlan,
           finalJudgement,
           warnings
         };
-        renderAllV21(parsed, entries);
+        renderAll(resultJson);
         document.getElementById("downloadBtn").disabled = false;
-        setStatus("分析完了。finder_results.jsonを出力できます。");
+        setStatus("検証完了。finder_results_v2_2.jsonを出力できます。");
       } catch (error) {
         console.error(error);
         setStatus("エラー：" + error.message);
@@ -256,58 +224,207 @@
       }
     }
 
-    function breathe() {
-      return new Promise(resolve => setTimeout(resolve, 0));
+    function evaluateRule(rule, entries, group = "ALL") {
+      const matched = entries.filter(rule.match);
+      const direction = rule.direction;
+      const pipsRows = matched.map(e => e.horizon30[direction]);
+      const metrics = metricsFromPips(pipsRows);
+      const maxFav = average(matched.map(e => direction === "buy" ? e.maxBuy.fav : e.maxSell.fav));
+      const maxAdv = average(matched.map(e => direction === "buy" ? e.maxBuy.adv : e.maxSell.adv));
+      const spread0 = metrics.expectancy;
+      const spread1 = round(metrics.expectancy - 1, 2);
+      const spread2 = round(metrics.expectancy - 2, 2);
+      const hold = bestHold(rule, matched);
+      const tpSl = estimateTpSl(maxFav, maxAdv);
+      return {
+        ruleName: rule.name,
+        group,
+        direction: direction.toUpperCase(),
+        conditions: rule.conditions,
+        count: metrics.count,
+        winRate: metrics.winRate,
+        pf: metrics.pf,
+        expectancy: metrics.expectancy,
+        expectancySpread0: spread0,
+        expectancySpread1: spread1,
+        expectancySpread2: spread2,
+        totalPips: metrics.totalPips,
+        avgMaxFavorable: round(maxFav, 2),
+        avgMaxAdverse: round(maxAdv, 2),
+        recommendedHoldMinutes: hold.min,
+        takeProfitGuide: `+${tpSl.tp}pips`,
+        stopLossGuide: `-${tpSl.sl}pips`,
+        adoption: judgeAdoption(metrics, spread2)
+      };
+    }
+
+    function bestHold(rule, entries) {
+      const direction = rule.direction;
+      const rows = [5, 10, 15, 30].map(min => {
+        const p = entries.map(e => e[`horizon${min}`][direction]);
+        return { min, ...metricsFromPips(p) };
+      }).sort((a,b) => (b.expectancy - a.expectancy) || (b.pf - a.pf));
+      return rows[0] || { min:30 };
+    }
+
+    function buildWalkForward(rule, trainEntries, testEntries) {
+      const train = evaluateRule(rule, trainEntries, "探索期間");
+      const test = evaluateRule(rule, testEntries, "検証期間");
+      const degradation = train.expectancy ? round((train.expectancy - test.expectancy) / Math.abs(train.expectancy) * 100, 1) : 0;
+      const overfit = test.pf >= 1.3 && test.expectancy >= 0.5 ? "有望" : test.pf >= 1 && test.expectancy > 0 ? "追加検証" : "過剰最適化疑い";
+      return {
+        ruleName: rule.name,
+        trainCount: train.count,
+        trainWinRate: train.winRate,
+        trainPF: train.pf,
+        trainExpectancy: train.expectancy,
+        testCount: test.count,
+        testWinRate: test.winRate,
+        testPF: test.pf,
+        testExpectancy: test.expectancy,
+        degradationRate: degradation,
+        overfitJudgement: test.count < 30 ? "検証件数30未満" : overfit
+      };
+    }
+
+    function buildTpSl(rule, entries, bars) {
+      const matched = entries.filter(rule.match);
+      return TP_SL_SETS.flatMap(set => SPREADS.map(spread => {
+        const rows = matched.map(e => {
+          if (set.type === "hold30") return e.horizon30[rule.direction] - spread;
+          return simulateTpSl(bars, e.index, rule.direction, set.tp, set.sl, 30) - spread;
+        });
+        return { ruleName: rule.name, test: `${set.name} / spread ${spread}`, spread, ...metricsFromPips(rows) };
+      }));
+    }
+
+    function buildPracticalRanking(coreRows, wfRows, tpRows) {
+      return coreRows.map(row => {
+        const wf = wfRows.find(x => x.ruleName === row.ruleName) || {};
+        const tpStable = tpRows.filter(x => x.ruleName === row.ruleName && x.spread === 2 && x.expectancy > 0).length;
+        const conditionCount = row.conditions.length;
+        const score = (row.count >= 100 ? 30 : row.count >= 50 ? 15 : 0) + Math.max(0, row.expectancySpread2) * 20 + Math.min(row.pf, 10) * 6 + (Number(wf.testPF || 0) >= 1.2 ? 25 : 0) + tpStable * 2 - conditionCount * 3;
+        return {
+          ruleName: row.ruleName,
+          direction: row.direction,
+          conditions: row.conditions,
+          rankScore: round(score, 2),
+          reason: `件数${row.count}、PF${row.pf}、スプレッド2pips後期待値${signed(row.expectancySpread2)}pips、検証PF${wf.testPF ?? "--"}`,
+          caution: row.count < 100 ? "件数はやや少なめ。別期間で再検証。" : "サンプルは比較的良好。",
+          priority: score >= 80 ? "高" : score >= 55 ? "中" : "低"
+        };
+      }).sort((a,b) => b.rankScore - a.rankScore).map((x,i) => ({ rank:i + 1, ...x }));
+    }
+
+    function buildIntegrationPlan(ranking) {
+      const top = ranking[0];
+      return {
+        buyBoostRule: "RSI < 30 かつ 直近10本pips <= -12 の場合、買いスコア +5。逆張り買い候補として表示。",
+        nyReboundRule: "RSI < 30 かつ NY後半 かつ 陰線、またはボラ0〜1の場合、強い買い入口候補として表示。",
+        pullbackRule: "RSI < 30 かつ 直近10本pips -8〜-4 かつ急騰急落=通常の場合、買い反発候補として表示。",
+        sellCautionRule: "SELL Rule Aは参考検証扱い。検証結果が弱い場合は本体実装せず警戒表示のみ。",
+        topPriority: top ? `${top.ruleName} を最優先で検討` : "移植候補なし"
+      };
+    }
+
+    function buildFinalJudgement(ranking) {
+      const top = ranking[0];
+      if (!top) return { rank:"D", label:"優位性なし", reason:"Core Ruleに有望候補がありません。" };
+      if (top.priority === "高") return { rank:"A", label:"本体実装候補あり", reason:`${top.ruleName} は${top.reason}のため、本体移植の第一候補です。` };
+      if (top.priority === "中") return { rank:"B", label:"追加検証", reason:`${top.ruleName} は候補ですが、別期間CSVで確認してから移植推奨です。` };
+      return { rank:"C", label:"弱い", reason:"Core Ruleはありますが、実戦移植にはまだ弱いです。" };
+    }
+
+    function buildWarnings(coreRows, wfRows) {
+      const warnings = [];
+      coreRows.forEach(row => {
+        if (row.count < 100) warnings.push(`${row.ruleName}: 件数${row.count}。サンプル不足に注意。`);
+        if (row.expectancySpread2 <= 0) warnings.push(`${row.ruleName}: スプレッド2pips後期待値がプラスではありません。`);
+      });
+      wfRows.forEach(row => {
+        if (row.testCount < 30) warnings.push(`${row.ruleName}: Walk Forward検証件数が30未満です。`);
+        if (row.testPF < 1) warnings.push(`${row.ruleName}: 検証期間PFが1未満です。`);
+      });
+      return warnings;
+    }
+
+    function renderAll(data) {
+      const m = data.meta;
+      document.getElementById("summary").innerHTML = `
+        <div class="stat"><span>読み込み本数</span><strong>${m.loadedRows.toLocaleString()}</strong></div>
+        <div class="stat"><span>期間</span><strong>${escapeHtml(m.startTime)}<br>${escapeHtml(m.endTime)}</strong></div>
+        <div class="stat"><span>欠損行数</span><strong>${m.missingRows.toLocaleString()}</strong></div>
+        <div class="stat"><span>解析対象本数</span><strong>${m.analyzedBars.toLocaleString()}</strong></div>
+      `;
+      document.getElementById("finalJudgement").innerHTML = `<strong>${data.finalJudgement.rank}：${escapeHtml(data.finalJudgement.label)}</strong><br><span class="small">${escapeHtml(data.finalJudgement.reason)}</span>`;
+      renderCoreRules(data.coreRuleResults);
+      renderStability("timeStability", data.timeStability);
+      renderStability("weekdayStability", data.weekdayStability);
+      renderWalkForward(data.walkForwardResults);
+      renderTpSl(data.tpSlResults);
+      renderRanking(data.practicalRanking);
+      renderIntegration(data.integrationPlan);
+    }
+
+    function renderCoreRules(rows) {
+      document.getElementById("coreRuleResults").innerHTML = tableHtml(rows, ["ルール", "方向", "条件", "件数", "勝率", "PF", "期待値", "spread0", "spread1", "spread2", "総pips", "平均最大順行", "平均最大逆行", "推奨保有", "TP", "SL", "採用判定"], r => [
+        r.ruleName, r.direction, pills(r.conditions), r.count, pct(r.winRate), fmt(r.pf), pips(r.expectancy), pips(r.expectancySpread0), pips(r.expectancySpread1), pips(r.expectancySpread2), pips(r.totalPips), pips(r.avgMaxFavorable), pips(r.avgMaxAdverse), `${r.recommendedHoldMinutes}分`, r.takeProfitGuide, r.stopLossGuide, r.adoption
+      ], true);
+    }
+
+    function renderStability(id, rows) {
+      document.getElementById(id).innerHTML = tableHtml(rows, ["ルール", "区分", "件数", "勝率", "PF", "期待値", "spread2期待値"], r => [
+        r.ruleName, r.group, r.count, pct(r.winRate), fmt(r.pf), pips(r.expectancy), pips(r.expectancySpread2)
+      ], false);
+    }
+
+    function renderWalkForward(rows) {
+      document.getElementById("walkForwardResults").innerHTML = tableHtml(rows, ["ルール", "探索件数", "探索勝率", "探索PF", "探索期待値", "検証件数", "検証勝率", "検証PF", "検証期待値", "劣化率", "判定"], r => [
+        r.ruleName, r.trainCount, pct(r.trainWinRate), fmt(r.trainPF), pips(r.trainExpectancy), r.testCount, pct(r.testWinRate), fmt(r.testPF), pips(r.testExpectancy), `${fmt(r.degradationRate)}%`, r.overfitJudgement
+      ], false);
+    }
+
+    function renderTpSl(rows) {
+      document.getElementById("tpSlResults").innerHTML = tableHtml(rows, ["ルール", "テスト", "件数", "勝率", "PF", "期待値", "総pips"], r => [
+        r.ruleName, r.test, r.count, pct(r.winRate), fmt(r.pf), pips(r.expectancy), pips(r.totalPips)
+      ], false);
+    }
+
+    function renderRanking(rows) {
+      document.getElementById("practicalRanking").innerHTML = tableHtml(rows, ["順位", "ルール", "方向", "条件", "採用理由", "注意点", "本体移植優先度"], r => [
+        r.rank, r.ruleName, r.direction, pills(r.conditions), r.reason, r.caution, r.priority
+      ], true);
+    }
+
+    function renderIntegration(plan) {
+      document.getElementById("integrationPlan").innerHTML = `
+        <div class="stat"><strong>Buy Boost Rule</strong><div>${escapeHtml(plan.buyBoostRule)}</div></div><br>
+        <div class="stat"><strong>NY Rebound Rule</strong><div>${escapeHtml(plan.nyReboundRule)}</div></div><br>
+        <div class="stat"><strong>Pullback Rule</strong><div>${escapeHtml(plan.pullbackRule)}</div></div><br>
+        <div class="stat"><strong>Sell Caution Rule</strong><div>${escapeHtml(plan.sellCautionRule)}</div></div><br>
+        <div class="stat"><strong>優先度</strong><div>${escapeHtml(plan.topPriority)}</div></div>
+      `;
     }
 
     function parseCsvBars(text) {
       const rows = parseCsv(text).filter(row => row.some(cell => String(cell).trim() !== ""));
-      if (!rows.length) return { bars: [], loadedRows: 0, missingRows: 0 };
       const headers = rows[0].map(h => normalizeHeader(h));
-      const hasHeader = headers.some(h => ["datetime", "time", "date", "日時"].includes(h)) || headers.includes("close") || headers.includes("終値");
+      const hasHeader = headers.some(h => ["datetime","time","date","日時"].includes(h)) || headers.includes("close") || headers.includes("終値");
       const body = hasHeader ? rows.slice(1) : rows;
       const idx = hasHeader ? {
-        time: findHeader(headers, ["日時", "datetime", "time", "date"]),
-        open: findHeader(headers, ["始値", "open"]),
-        high: findHeader(headers, ["高値", "high"]),
-        low: findHeader(headers, ["安値", "low"]),
-        close: findHeader(headers, ["終値", "close"])
-      } : { time: 0, open: 1, high: 2, low: 3, close: 4 };
+        time: findHeader(headers, ["日時","datetime","time","date"]),
+        open: findHeader(headers, ["始値","open"]),
+        high: findHeader(headers, ["高値","high"]),
+        low: findHeader(headers, ["安値","low"]),
+        close: findHeader(headers, ["終値","close"])
+      } : { time:0, open:1, high:2, low:3, close:4 };
       let missingRows = 0;
       const bars = body.map((row, sourceIndex) => {
-        const bar = {
-          sourceIndex,
-          rawTime: row[idx.time],
-          time: parseDate(row[idx.time]),
-          open: toNumber(row[idx.open]),
-          high: toNumber(row[idx.high]),
-          low: toNumber(row[idx.low]),
-          close: toNumber(row[idx.close])
-        };
-        if (!bar.time || ![bar.open, bar.high, bar.low, bar.close].every(Number.isFinite)) missingRows++;
+        const bar = { sourceIndex, time:parseDate(row[idx.time]), open:toNumber(row[idx.open]), high:toNumber(row[idx.high]), low:toNumber(row[idx.low]), close:toNumber(row[idx.close]) };
+        if (!bar.time || ![bar.open,bar.high,bar.low,bar.close].every(Number.isFinite)) missingRows++;
         return bar;
-      }).filter(b => b.time && [b.open, b.high, b.low, b.close].every(Number.isFinite))
-        .sort((a, b) => a.time - b.time)
-        .map((b, i) => ({ ...b, index: i }));
-      return { bars, loadedRows: body.length, missingRows };
-    }
-
-    function parseCsv(text) {
-      const rows = [];
-      let row = [], cell = "", quote = false;
-      for (let i = 0; i < text.length; i++) {
-        const ch = text[i], next = text[i + 1];
-        if (quote && ch === '"' && next === '"') { cell += '"'; i++; continue; }
-        if (ch === '"') { quote = !quote; continue; }
-        if (!quote && ch === ",") { row.push(cell); cell = ""; continue; }
-        if (!quote && (ch === "\n" || ch === "\r")) {
-          if (ch === "\r" && next === "\n") i++;
-          row.push(cell); rows.push(row); row = []; cell = ""; continue;
-        }
-        cell += ch;
-      }
-      row.push(cell); rows.push(row);
-      return rows;
+      }).filter(b => b.time && [b.open,b.high,b.low,b.close].every(Number.isFinite)).sort((a,b) => a.time - b.time).map((b,i) => ({ ...b, index:i }));
+      return { bars, loadedRows:body.length, missingRows };
     }
 
     function enrichBars(bars) {
@@ -316,14 +433,10 @@
       let avgGain = 0, avgLoss = 0;
       bars.forEach((bar, i) => {
         if (i === 0) bar.ema20 = bar.close;
-        else {
-          ema = bar.close * alpha + ema * (1 - alpha);
-          bar.ema20 = ema;
-        }
+        else { ema = bar.close * alpha + ema * (1 - alpha); bar.ema20 = ema; }
         if (i > 0) {
           const diff = bar.close - bars[i - 1].close;
-          const gain = Math.max(0, diff);
-          const loss = Math.max(0, -diff);
+          const gain = Math.max(0, diff), loss = Math.max(0, -diff);
           if (i <= RSI_PERIOD) {
             avgGain += gain; avgLoss += loss;
             if (i === RSI_PERIOD) { avgGain /= RSI_PERIOD; avgLoss /= RSI_PERIOD; bar.rsi = calcRsi(avgGain, avgLoss); }
@@ -338,501 +451,51 @@
           const mid = average(slice20.map(b => b.close));
           const sd = Math.sqrt(average(slice20.map(b => Math.pow(b.close - mid, 2))));
           bar.bbMid = mid; bar.bbUpper = mid + sd * 2; bar.bbLower = mid - sd * 2; bar.bbPosition = classifyBb(bar);
-        } else {
-          bar.bbPosition = "BB不足";
-        }
+        } else bar.bbPosition = "BB不足";
         bar.session = getSession(bar.time);
-        bar.weekday = ["日曜", "月曜", "火曜", "水曜", "木曜", "金曜", "土曜"][bar.time.getDay()];
-        bar.emaSignedDistance = (bar.close - bar.ema20) * PIP;
-        bar.emaDistance = Math.abs(bar.emaSignedDistance);
-        bar.emaDirection = bar.emaSignedDistance >= 0 ? "EMA上" : "EMA下";
-        bar.recent3 = recentPips(bars, i, 3);
-        bar.recent5 = recentPips(bars, i, 5);
+        bar.weekday = ["日曜","月曜","火曜","水曜","木曜","金曜","土曜"][bar.time.getDay()];
         bar.recent10 = recentPips(bars, i, 10);
-        const prev20 = bars.slice(Math.max(0, i - 20), i);
-        bar.highUpdate = prev20.length ? bar.high >= Math.max(...prev20.map(b => b.high)) : false;
-        bar.lowUpdate = prev20.length ? bar.low <= Math.min(...prev20.map(b => b.low)) : false;
         bar.candleType = bar.close >= bar.open ? "陽線" : "陰線";
-        bar.bullCount = consecutive(bars, i, "bull");
-        bar.bearCount = consecutive(bars, i, "bear");
         const volSlice = bars.slice(Math.max(0, i - 9), i + 1);
         bar.volatility = average(volSlice.map(b => (b.high - b.low) * PIP));
+        bar.volBucket = bucketVol(bar.volatility);
+        bar.recent3 = recentPips(bars, i, 3);
         bar.surgeType = bar.recent3 >= 3 ? "急騰" : bar.recent3 <= -3 ? "急落" : "通常";
-        bar.features = buildFeatures(bar);
       });
     }
 
     function buildEntries(bars) {
-      const maxH = Math.max(...HORIZONS);
       const entries = [];
-      for (let i = Math.max(30, BB_PERIOD, RSI_PERIOD, EMA_PERIOD); i < bars.length - maxH; i++) {
+      for (let i = 30; i < bars.length - 30; i++) {
         const bar = bars[i];
         if (!Number.isFinite(bar.rsi) || bar.bbPosition === "BB不足") continue;
-        const horizon = {};
-        HORIZONS.forEach(min => {
-          const future = bars[i + min];
-          const buy = (future.close - bar.close) * PIP;
-          horizon[min] = { buy: round(buy, 2), sell: round(-buy, 2) };
-        });
+        const buy5 = (bars[i + 5].close - bar.close) * PIP;
+        const buy10 = (bars[i + 10].close - bar.close) * PIP;
+        const buy15 = (bars[i + 15].close - bar.close) * PIP;
+        const buy30 = (bars[i + 30].close - bar.close) * PIP;
         entries.push({
-          index: i,
-          datetime: formatDateTime(bar.time),
-          price: bar.close,
+          index:i,
           bar,
-          features: bar.features,
-          horizon,
-          maxBuy: futureMax(bars, i, "buy", 30),
-          maxSell: futureMax(bars, i, "sell", 30)
+          horizon5:{ buy:round(buy5,2), sell:round(-buy5,2) },
+          horizon10:{ buy:round(buy10,2), sell:round(-buy10,2) },
+          horizon15:{ buy:round(buy15,2), sell:round(-buy15,2) },
+          horizon30:{ buy:round(buy30,2), sell:round(-buy30,2) },
+          maxBuy:futureMax(bars, i, "buy", 30),
+          maxSell:futureMax(bars, i, "sell", 30)
         });
       }
       return entries;
     }
 
-    function buildFeatures(bar) {
-      return [
-        `時間帯=${bar.session}`,
-        `曜日=${bar.weekday}`,
-        `RSI=${bucketRsi(bar.rsi)}`,
-        `EMA方向=${bar.emaDirection}`,
-        `EMA距離=${bucketEma(bar.emaDistance)}`,
-        `BB位置=${bar.bbPosition}`,
-        `直近3本=${bucketPips(bar.recent3, [-5,-3,-1,1,3,5])}`,
-        `直近5本=${bucketPips(bar.recent5, [-8,-5,-2,2,5,8])}`,
-        `直近10本=${bucketPips(bar.recent10, [-12,-8,-4,4,8,12])}`,
-        `高値更新=${bar.highUpdate ? "あり" : "なし"}`,
-        `安値更新=${bar.lowUpdate ? "あり" : "なし"}`,
-        `ローソク=${bar.candleType}`,
-        `連続陽線=${bucketCount(bar.bullCount)}`,
-        `連続陰線=${bucketCount(bar.bearCount)}`,
-        `ボラ=${bucketVol(bar.volatility)}`,
-        `急騰急落=${bar.surgeType}`
-      ];
+    function judgeAdoption(metrics, spread2) {
+      if (metrics.count >= 100 && metrics.pf >= 1.3 && spread2 > 0.5) return "A：本体実装候補";
+      if (metrics.count >= 50 && metrics.pf >= 1.1 && spread2 > 0) return "B：追加検証";
+      if (metrics.expectancy > 0) return "C：弱い";
+      return "D：不採用";
     }
 
-    function aggregateSingle(entries, direction, horizon) {
-      const map = new Map();
-      entries.forEach(entry => {
-        const pips = entry.horizon[horizon][direction];
-        const max = direction === "buy" ? entry.maxBuy : entry.maxSell;
-        entry.features.forEach(label => addMetric(map, label, direction, horizon, pips, max.fav, max.adv));
-      });
-      return finalizeMetrics(map);
-    }
-
-    function aggregateCombinations(entries, direction, horizon, singles) {
-      const topLabels = new Set(singles.filter(r => r.direction === direction && r.count >= 50 && r.expectancy > 0 && r.pf >= 1).sort(rankSort).slice(0, 28).map(r => r.condition));
-      const map = new Map();
-      entries.forEach(entry => {
-        const labels = entry.features.filter(label => topLabels.has(label)).slice(0, 10);
-        if (labels.length < 2) return;
-        const pips = entry.horizon[horizon][direction];
-        const max = direction === "buy" ? entry.maxBuy : entry.maxSell;
-        for (let a = 0; a < labels.length - 1; a++) {
-          for (let b = a + 1; b < labels.length; b++) addMetric(map, `${labels[a]} + ${labels[b]}`, direction, horizon, pips, max.fav, max.adv);
-        }
-        for (let a = 0; a < labels.length - 2; a++) {
-          for (let b = a + 1; b < labels.length - 1; b++) {
-            for (let c = b + 1; c < labels.length; c++) addMetric(map, `${labels[a]} + ${labels[b]} + ${labels[c]}`, direction, horizon, pips, max.fav, max.adv);
-          }
-        }
-      });
-      return finalizeMetrics(map);
-    }
-
-    function addMetric(map, condition, direction, horizon, pips, maxFav, maxAdv) {
-      const key = `${direction}|${condition}`;
-      if (!map.has(key)) map.set(key, { direction, condition, horizon, count: 0, wins: 0, grossProfit: 0, grossLoss: 0, totalPips: 0, maxFavTotal: 0, maxAdvTotal: 0 });
-      const row = map.get(key);
-      row.count++;
-      row.totalPips += pips;
-      row.maxFavTotal += maxFav;
-      row.maxAdvTotal += maxAdv;
-      if (pips > 0) { row.wins++; row.grossProfit += pips; }
-      else if (pips < 0) row.grossLoss += Math.abs(pips);
-    }
-
-    function finalizeMetrics(map) {
-      return [...map.values()].map(row => {
-        const winRate = row.count ? row.wins / row.count * 100 : 0;
-        const pf = row.grossLoss > 0 ? row.grossProfit / row.grossLoss : row.grossProfit > 0 ? 999 : 0;
-        const expectancy = row.count ? row.totalPips / row.count : 0;
-        return {
-          direction: row.direction,
-          condition: row.condition,
-          horizon: row.horizon,
-          count: row.count,
-          winRate: round(winRate, 1),
-          pf: round(pf, 2),
-          expectancy: round(expectancy, 2),
-          effectiveExpectancy: round(expectancy - 2, 2),
-          totalPips: round(row.totalPips, 1),
-          avgMaxFavorable: round(row.maxFavTotal / row.count, 2),
-          avgMaxAdverse: round(row.maxAdvTotal / row.count, 2),
-          sampleWarning: sampleWarning(row.count),
-          score: scoreMetric({ count: row.count, winRate, pf, expectancy, totalPips: row.totalPips })
-        };
-      }).sort(rankSort);
-    }
-
-    function buildCandidates(rows, entries) {
-      const seen = new Set();
-      const candidates = [];
-      rows.filter(isCandidateSeed).sort(rankSort).forEach(row => {
-        const key = `${row.direction}|${row.condition}`;
-        const conditionCount = row.condition.split(" + ").length;
-        if (seen.has(key) || conditionCount < 2 || conditionCount > 3) return;
-        seen.add(key);
-        const bestHold = HORIZONS.map(h => evaluateCondition(entries, row.direction, row.condition, h)).filter(Boolean).sort(rankSort)[0] || row;
-        const candidate = {
-          name: `Candidate ${String.fromCharCode(65 + candidates.length)}`,
-          direction: row.direction.toUpperCase(),
-          conditions: row.condition.split(" + "),
-          count: bestHold.count,
-          winRate: bestHold.winRate,
-          pf: bestHold.pf,
-          expectancy: bestHold.expectancy,
-          effectiveExpectancy: round(bestHold.expectancy - 2, 2),
-          totalPips: bestHold.totalPips,
-          recommendedHoldMinutes: bestHold.horizon,
-          takeProfitGuide: `+${Math.max(3, Math.min(10, Math.round(row.avgMaxFavorable || 3)))}pips`,
-          stopLossGuide: `-${Math.max(3, Math.min(8, Math.round(Math.abs(row.avgMaxAdverse || -3))))}pips`,
-          sampleWarning: sampleWarning(bestHold.count),
-          note: bestHold.count < 100 ? "サンプル数に注意。別期間・1年分CSVで再検証推奨。" : "サンプル良好。ただしスプレッド込みで継続検証推奨。",
-          score: scoreMetric(bestHold)
-        };
-        candidates.push(candidate);
-      });
-      return candidates.sort((a, b) => b.score - a.score).slice(0, 10).map((c, i) => ({ rank: i + 1, ...c }));
-    }
-
-    function isCandidateSeed(row) {
-      return row.count >= 50 && row.pf >= 1.3 && row.expectancy >= 0.5 && row.effectiveExpectancy > 0;
-    }
-
-    function buildCandidatesV21(rows, entries) {
-      const rawCandidates = [];
-      rows.filter(isCandidateSeed).sort(candidateSeedSort).forEach(row => {
-        const conditionCount = row.condition.split(" + ").length;
-        if (conditionCount < 2 || conditionCount > 3) return;
-        const bestHold = HORIZONS.map(h => evaluateCondition(entries, row.direction, row.condition, h)).filter(Boolean).sort(candidateSeedSort)[0] || row;
-        const candidate = {
-          direction: row.direction.toUpperCase(),
-          conditions: normalizeCandidateConditions(row.condition.split(" + ")),
-          count: bestHold.count,
-          winRate: bestHold.winRate,
-          pf: bestHold.pf,
-          expectancy: bestHold.expectancy,
-          effectiveExpectancy: round(bestHold.expectancy - 2, 2),
-          totalPips: bestHold.totalPips,
-          recommendedHoldMinutes: bestHold.horizon,
-          takeProfitGuide: `+${Math.max(3, Math.min(10, Math.round(row.avgMaxFavorable || 3)))}pips`,
-          stopLossGuide: `-${Math.max(3, Math.min(8, Math.round(Math.abs(row.avgMaxAdverse || -3))))}pips`,
-          sampleWarning: sampleWarning(bestHold.count),
-          note: bestHold.count < 100 ? "サンプル数に注意。別期間・1年分CSVで再検証推奨。" : "サンプル良好。ただしスプレッド込みで継続検証推奨。",
-          score: scoreMetric(bestHold),
-          conditionCount
-        };
-        if (candidate.effectiveExpectancy <= 0) return;
-        rawCandidates.push(candidate);
-      });
-      return mergeSimilarCandidates(rawCandidates)
-        .sort(candidateDisplaySort)
-        .slice(0, 10)
-        .map((c, i) => ({ rank: i + 1, name: `Candidate ${String.fromCharCode(65 + i)}`, ...c }));
-    }
-
-    function normalizeCandidateConditions(conditions) {
-      return [...new Set(conditions.map(c => String(c).trim()).filter(Boolean))].sort();
-    }
-
-    function mergeSimilarCandidates(candidates) {
-      const merged = [];
-      candidates.forEach(candidate => {
-        const duplicateIndex = merged.findIndex(existing => isSimilarCandidate(existing, candidate));
-        if (duplicateIndex < 0) {
-          merged.push(candidate);
-          return;
-        }
-        const current = merged[duplicateIndex];
-        const winner = candidateDisplaySort(candidate, current) < 0 ? candidate : current;
-        const loser = winner === candidate ? current : candidate;
-        merged[duplicateIndex] = {
-          ...winner,
-          mergedFrom: [...(winner.mergedFrom || []), loser.conditions.join(" + ")],
-          note: `${winner.note} 類似候補を統合済み。`
-        };
-      });
-      return merged;
-    }
-
-    function isSimilarCandidate(a, b) {
-      if (a.direction !== b.direction) return false;
-      const setA = new Set(a.conditions);
-      const setB = new Set(b.conditions);
-      const intersection = [...setA].filter(x => setB.has(x)).length;
-      const smaller = Math.min(setA.size, setB.size);
-      const union = new Set([...setA, ...setB]).size;
-      return intersection === smaller || intersection / union >= 0.67;
-    }
-
-    function candidateSeedSort(a, b) {
-      const aCount = String(a.condition || "").split(" + ").length;
-      const bCount = String(b.condition || "").split(" + ").length;
-      return (aCount - bCount) || rankSort(a, b);
-    }
-
-    function candidateDisplaySort(a, b) {
-      return (a.conditionCount - b.conditionCount) || (b.effectiveExpectancy - a.effectiveExpectancy) || (b.pf - a.pf) || (b.count - a.count);
-    }
-
-    function evaluateCondition(entries, direction, condition, horizon) {
-      const labels = condition.split(" + ");
-      const map = new Map();
-      entries.forEach(entry => {
-        if (!labels.every(label => entry.features.includes(label))) return;
-        const pips = entry.horizon[horizon][direction];
-        const max = direction === "buy" ? entry.maxBuy : entry.maxSell;
-        addMetric(map, condition, direction, horizon, pips, max.fav, max.adv);
-      });
-      return finalizeMetrics(map)[0] || null;
-    }
-
-    function buildBacktests(candidates, entries, bars) {
-      const rows = [];
-      candidates.forEach(candidate => {
-        const matched = entries.filter(entry => candidate.conditions.every(label => entry.features.includes(label)));
-        TP_SL_SETS.forEach(set => {
-          SPREADS.forEach(spread => {
-            const pipsRows = matched.map(entry => {
-              if (set.type === "hold30") return entry.horizon[30][candidate.direction.toLowerCase()] - spread;
-              return simulateTpSl(bars, entry.index, candidate.direction.toLowerCase(), set.tp, set.sl, 30) - spread;
-            });
-            rows.push({ candidate: candidate.name, test: `${set.name} / spread ${spread}`, spread, ...metricsFromPips(pipsRows) });
-          });
-        });
-      });
-      return rows;
-    }
-
-    function buildWalkForward(candidates, trainEntries, testEntries) {
-      return candidates.map(candidate => {
-        const direction = candidate.direction.toLowerCase();
-        const train = metricsFromPips(trainEntries.filter(e => candidate.conditions.every(c => e.features.includes(c))).map(e => e.horizon[candidate.recommendedHoldMinutes][direction]));
-        const test = metricsFromPips(testEntries.filter(e => candidate.conditions.every(c => e.features.includes(c))).map(e => e.horizon[candidate.recommendedHoldMinutes][direction]));
-        const degradation = train.expectancy ? round((train.expectancy - test.expectancy) / Math.abs(train.expectancy) * 100, 1) : 0;
-        const judgement = test.pf >= 1.2 && test.expectancy > 0 ? "有望" : test.pf < 1 ? "過剰最適化疑い" : "検証継続";
-        return {
-          candidate: candidate.name,
-          trainCount: train.count,
-          testCount: test.count,
-          trainPF: train.pf,
-          testPF: test.pf,
-          trainExpectancy: train.expectancy,
-          testExpectancy: test.expectancy,
-          degradationRate: degradation,
-          sampleWarning: test.count < 30 ? "検証件数30未満：警告" : sampleWarning(test.count),
-          judgement: test.count < 30 ? "検証不足" : judgement
-        };
-      });
-    }
-
-    function judgeFinal(candidates, wfRows) {
-      const best = candidates[0];
-      if (!best) return { rank: "D", label: "優位性なし", reason: "件数50以上、PF1.3以上、期待値0.5pips以上、スプレッド2pips込みプラスを満たす候補がありません。" };
-      const wf = wfRows.find(r => r.candidate === best.name);
-      if (best.count >= 100 && best.pf >= 1.3 && best.expectancy >= 0.5 && best.effectiveExpectancy > 0 && wf && wf.testPF >= 1.2 && wf.testExpectancy > 0) {
-        return { rank: "A", label: "有望候補あり", reason: `${best.name} は件数${best.count}、PF${best.pf}、期待値${signed(best.expectancy)}pips、検証期間PF${wf.testPF}です。別期間・1年分CSVで再検証推奨。` };
-      }
-      if (best.effectiveExpectancy > 0 && wf && wf.testExpectancy > 0) return { rank: "B", label: "検証継続", reason: `${best.name} はプラスですが、Walk Forwardまたはサンプルに注意が必要です。` };
-      if (best.expectancy > 0) return { rank: "C", label: "弱い候補のみ", reason: "候補はありますが、スプレッド込みまたは検証期間で弱いです。" };
-      return { rank: "D", label: "優位性なし", reason: "採用できる期待値が確認できません。" };
-    }
-
-    function buildWarnings(candidates, wfRows) {
-      const warnings = [];
-      candidates.forEach(c => {
-        if (c.count < 100) warnings.push(`${c.name}: 件数${c.count}は${c.sampleWarning}。PFが高くても過剰最適化に注意。`);
-        const wf = wfRows.find(r => r.candidate === c.name);
-        if (wf && wf.testPF < 1) warnings.push(`${c.name}: 検証期間PFが1未満のため過剰最適化疑い。`);
-      });
-      if (!candidates.length) warnings.push("Core Entry Candidate基準を満たす候補がありません。");
-      return warnings;
-    }
-
-    function judgeFinalV21(candidates, wfRows) {
-      const best = candidates[0];
-      if (!best) {
-        return { rank: "D", label: "優位性なし", reason: "スプレッド2pips後でも期待値プラスになる重複統合済み候補がありません。" };
-      }
-      const wf = wfRows.find(r => r.candidate === best.name);
-      if (best.count >= 100 && best.pf >= 1.3 && best.effectiveExpectancy > 0 && wf && wf.testCount >= 30 && wf.testPF >= 1.2 && wf.testExpectancy > 0) {
-        return { rank: "A", label: "有望候補あり", reason: `${best.name} は条件数${best.conditions.length}、件数${best.count}、PF${best.pf}、スプレッド後期待値${signed(best.effectiveExpectancy)}pips、検証期間PF${wf.testPF}です。` };
-      }
-      if (best.effectiveExpectancy > 0 && wf && wf.testExpectancy > 0) {
-        return { rank: "B", label: "検証継続", reason: `${best.name} はスプレッド後もプラスですが、Walk Forwardの件数またはPFに注意が必要です。` };
-      }
-      return { rank: "C", label: "弱い候補のみ", reason: "候補はありますが、実戦候補としてはまだ弱いです。" };
-    }
-
-    function buildWarningsV21(candidates, wfRows) {
-      const warnings = [];
-      candidates.forEach(c => {
-        if (c.count < 100) warnings.push(`${c.name}: 件数${c.count}は${c.sampleWarning}。PFが高くても過剰最適化に注意。`);
-        if (c.effectiveExpectancy <= 0) warnings.push(`${c.name}: スプレッド2pips後の期待値がプラスではありません。`);
-        const wf = wfRows.find(r => r.candidate === c.name);
-        if (wf && wf.testCount < 30) warnings.push(`${c.name}: Walk Forward Testの検証件数が30未満です。`);
-        if (wf && wf.testPF < 1) warnings.push(`${c.name}: 検証期間PFが1未満のため過剰最適化疑い。`);
-      });
-      if (!candidates.length) warnings.push("Core Entry Candidate基準を満たす候補がありません。");
-      return warnings;
-    }
-
-    function renderAllV21(parsed, entries) {
-      const r = finderResults;
-      document.getElementById("summary").innerHTML = `
-        <div class="stat"><span>読み込み本数</span><strong>${r.meta.loadedRows.toLocaleString()}</strong></div>
-        <div class="stat"><span>期間</span><strong>${escapeHtml(r.meta.startTime)}<br>${escapeHtml(r.meta.endTime)}</strong></div>
-        <div class="stat"><span>欠損行数</span><strong>${r.meta.missingRows.toLocaleString()}</strong></div>
-        <div class="stat"><span>解析対象本数</span><strong>${r.meta.analyzedBars.toLocaleString()}</strong></div>
-      `;
-      document.getElementById("finalJudgement").innerHTML = `<strong>${escapeHtml(r.finalJudgement.rank)}：${escapeHtml(r.finalJudgement.label)}</strong><br><span class="small">${escapeHtml(r.finalJudgement.reason)}</span>`;
-      renderRankV21("bestBuy", r.bestBuyConditions);
-      renderRankV21("bestSell", r.bestSellConditions);
-      renderRankV21("comboRanking", r.combinationRanking);
-      renderCoreCandidate(r.coreCandidate);
-      renderCandidatesBySide("buyCandidates", r.buyCandidates);
-      renderCandidatesBySide("sellCandidates", r.sellCandidates);
-      renderCandidatesV21(r.candidateTop10);
-      renderBacktestsV21(r.backtestResults);
-      renderWalkForwardV21(r.walkForwardResults);
-    }
-
-    function renderRankV21(id, rows) {
-      document.getElementById(id).innerHTML = tableHtml(rows, ["順位", "方向", "条件", "件数", "勝率", "PF", "期待値", "総pips", "サンプル警告"], (row, i) => [
-        i + 1, row.direction.toUpperCase(), row.condition, row.count, pct(row.winRate), fmt(row.pf), pips(row.expectancy), pips(row.totalPips), warningHtml(row.sampleWarning)
-      ], true);
-    }
-
-    function renderCoreCandidate(row) {
-      const target = document.getElementById("coreCandidate");
-      if (!target) return;
-      if (!row) { target.textContent = "Core Candidateはありません。"; return; }
-      target.innerHTML = tableHtml([row], ["候補名", "BUY/SELL", "条件", "件数", "勝率", "PF", "期待値", "スプレッド後", "推奨保有", "注意点"], c => [
-        c.name, c.direction, c.conditions.map(x => `<span class="pill">${escapeHtml(x)}</span>`).join(" "), c.count, pct(c.winRate), fmt(c.pf), pips(c.expectancy), pips(c.effectiveExpectancy), `${c.recommendedHoldMinutes}分`, `${warningHtml(c.sampleWarning)} ${escapeHtml(c.note || "")}`
-      ], true);
-    }
-
-    function renderCandidatesBySide(id, rows) {
-      document.getElementById(id).innerHTML = tableHtml(rows, ["順位", "候補名", "条件", "件数", "勝率", "PF", "スプレッド後", "注意点"], row => [
-        row.rank, row.name, row.conditions.map(c => `<span class="pill">${escapeHtml(c)}</span>`).join(" "), row.count, pct(row.winRate), fmt(row.pf), pips(row.effectiveExpectancy), warningHtml(row.sampleWarning)
-      ], true);
-    }
-
-    function renderCandidatesV21(rows) {
-      document.getElementById("candidateTop10").innerHTML = tableHtml(rows, ["順位", "候補名", "BUY/SELL", "条件", "条件数", "件数", "勝率", "PF", "期待値", "スプレッド差引後", "総pips", "推奨保有", "利確", "損切り", "注意点"], row => [
-        row.rank, row.name, row.direction, row.conditions.map(c => `<span class="pill">${escapeHtml(c)}</span>`).join(" "), row.conditions.length, row.count, pct(row.winRate), fmt(row.pf), pips(row.expectancy), pips(row.effectiveExpectancy), pips(row.totalPips), `${row.recommendedHoldMinutes}分`, row.takeProfitGuide, row.stopLossGuide, `${warningHtml(row.sampleWarning)} ${escapeHtml(row.note || "")}`
-      ], true);
-    }
-
-    function renderBacktestsV21(rows) {
-      document.getElementById("backtestResults").innerHTML = tableHtml(rows, ["候補名", "テスト条件", "件数", "勝率", "PF", "期待値", "総pips"], row => [
-        row.candidate, row.test, row.count, pct(row.winRate), fmt(row.pf), pips(row.expectancy), pips(row.totalPips)
-      ], false);
-    }
-
-    function renderWalkForwardV21(rows) {
-      document.getElementById("walkForwardResults").innerHTML = tableHtml(rows, ["候補名", "探索件数", "検証件数", "探索PF", "検証PF", "探索期待値", "検証期待値", "劣化率", "警告", "採用可否"], row => [
-        row.candidate, row.trainCount, row.testCount, fmt(row.trainPF), fmt(row.testPF), pips(row.trainExpectancy), pips(row.testExpectancy), `${fmt(row.degradationRate)}%`, row.sampleWarning, row.judgement
-      ], false);
-    }
-
-    function renderAll(parsed, entries) {
-      const r = finderResults;
-      document.getElementById("summary").innerHTML = `
-        <div class="stat"><span>読み込み本数</span><strong>${r.meta.loadedRows.toLocaleString()}</strong></div>
-        <div class="stat"><span>期間</span><strong>${escapeHtml(r.meta.startTime)}<br>${escapeHtml(r.meta.endTime)}</strong></div>
-        <div class="stat"><span>欠損行数</span><strong>${r.meta.missingRows.toLocaleString()}</strong></div>
-        <div class="stat"><span>解析対象本数</span><strong>${r.meta.analyzedBars.toLocaleString()}</strong></div>
-      `;
-      document.getElementById("finalJudgement").innerHTML = `<strong>${escapeHtml(r.finalJudgement.rank)}：${escapeHtml(r.finalJudgement.label)}</strong><br><span class="small">${escapeHtml(r.finalJudgement.reason)}</span>`;
-      renderRank("bestBuy", r.bestBuyConditions);
-      renderRank("bestSell", r.bestSellConditions);
-      renderRank("comboRanking", r.combinationRanking);
-      renderCandidates(r.candidateTop10);
-      renderBacktests(r.backtestResults);
-      renderWalkForward(r.walkForwardResults);
-    }
-
-    function renderRank(id, rows) {
-      document.getElementById(id).innerHTML = tableHtml(rows, ["順位", "方向", "条件", "件数", "勝率", "PF", "期待値", "総pips", "サンプル警告"], (row, i) => [
-        i + 1, row.direction.toUpperCase(), row.condition, row.count, pct(row.winRate), fmt(row.pf), pips(row.expectancy), pips(row.totalPips), warningHtml(row.sampleWarning)
-      ], true);
-    }
-
-    function renderCandidates(rows) {
-      document.getElementById("candidateTop10").innerHTML = tableHtml(rows, ["順位", "候補名", "BUY/SELL", "条件", "件数", "勝率", "PF", "期待値", "スプレッド差引後", "総pips", "推奨保有", "利確", "損切り", "注意点"], row => [
-        row.rank, row.name, row.direction, row.conditions.map(c => `<span class="pill">${escapeHtml(c)}</span>`).join(" "), row.count, pct(row.winRate), fmt(row.pf), pips(row.expectancy), pips(row.effectiveExpectancy), pips(row.totalPips), `${row.recommendedHoldMinutes}分`, row.takeProfitGuide, row.stopLossGuide, `${warningHtml(row.sampleWarning)} ${escapeHtml(row.note)}`
-      ], true);
-    }
-
-    function renderBacktests(rows) {
-      document.getElementById("backtestResults").innerHTML = tableHtml(rows, ["候補名", "テスト条件", "件数", "勝率", "PF", "期待値", "総pips"], row => [
-        row.candidate, row.test, row.count, pct(row.winRate), fmt(row.pf), pips(row.expectancy), pips(row.totalPips)
-      ], false);
-    }
-
-    function renderWalkForward(rows) {
-      document.getElementById("walkForwardResults").innerHTML = tableHtml(rows, ["候補名", "探索PF", "検証PF", "探索期待値", "検証期待値", "劣化率", "採用可否"], row => [
-        row.candidate, fmt(row.trainPF), fmt(row.testPF), pips(row.trainExpectancy), pips(row.testExpectancy), `${fmt(row.degradationRate)}%`, row.judgement
-      ], false);
-    }
-
-    function tableHtml(rows, headers, mapper, trusted) {
-      if (!rows.length) return "該当データがありません。";
-      return `<table><thead><tr>${headers.map(h => `<th>${escapeHtml(h)}</th>`).join("")}</tr></thead><tbody>${rows.map((row, i) => `<tr>${mapper(row, i).map(cell => `<td class="${String(cell).includes('%') ? heatClass(parseFloat(cell)) : ''}">${trusted ? cell : escapeHtml(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
-    }
-
-    function downloadJson() {
-      if (!finderResults) return;
-      const blob = new Blob([JSON.stringify(finderResults, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url; a.download = "finder_results.json";
-      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-    }
-
-    function futureMax(bars, index, direction, minutes) {
-      const entry = bars[index].close;
-      let fav = 0, adv = 0;
-      for (let i = index + 1; i <= Math.min(index + minutes, bars.length - 1); i++) {
-        if (direction === "buy") {
-          fav = Math.max(fav, (bars[i].high - entry) * PIP);
-          adv = Math.min(adv, (bars[i].low - entry) * PIP);
-        } else {
-          fav = Math.max(fav, (entry - bars[i].low) * PIP);
-          adv = Math.min(adv, (entry - bars[i].high) * PIP);
-        }
-      }
-      return { fav: round(fav, 2), adv: round(adv, 2) };
-    }
-
-    function simulateTpSl(bars, index, direction, tp, sl, maxMin) {
-      const entry = bars[index].close;
-      for (let i = index + 1; i <= Math.min(index + maxMin, bars.length - 1); i++) {
-        if (direction === "buy") {
-          const adverse = (entry - bars[i].low) * PIP;
-          const favorable = (bars[i].high - entry) * PIP;
-          if (adverse >= sl) return -sl;
-          if (favorable >= tp) return tp;
-        } else {
-          const adverse = (bars[i].high - entry) * PIP;
-          const favorable = (entry - bars[i].low) * PIP;
-          if (adverse >= sl) return -sl;
-          if (favorable >= tp) return tp;
-        }
-      }
-      const close = bars[Math.min(index + maxMin, bars.length - 1)].close;
-      return round(direction === "buy" ? (close - entry) * PIP : (entry - close) * PIP, 2);
+    function estimateTpSl(maxFav, maxAdv) {
+      return { tp:Math.max(3, Math.min(10, Math.round(maxFav || 3))), sl:Math.max(3, Math.min(8, Math.round(Math.abs(maxAdv || -3)))) };
     }
 
     function metricsFromPips(values) {
@@ -840,19 +503,50 @@
       const wins = rows.filter(v => v > 0);
       const losses = rows.filter(v => v < 0);
       const gp = sum(wins), gl = Math.abs(sum(losses)), total = sum(rows);
-      return { count: rows.length, winRate: rows.length ? round(wins.length / rows.length * 100, 1) : 0, pf: gl > 0 ? round(gp / gl, 2) : gp > 0 ? 999 : 0, expectancy: rows.length ? round(total / rows.length, 2) : 0, totalPips: round(total, 1) };
+      return { count:rows.length, winRate:rows.length ? round(wins.length / rows.length * 100, 1) : 0, pf:gl > 0 ? round(gp / gl, 2) : gp > 0 ? 999 : 0, expectancy:rows.length ? round(total / rows.length, 2) : 0, totalPips:round(total, 1) };
     }
 
-    function isTradable(row) { return row.count >= 30 && row.expectancy > 0 && row.pf >= 1; }
-    function rankSort(a, b) { return (b.score - a.score) || (b.expectancy - a.expectancy) || (b.pf - a.pf) || (b.totalPips - a.totalPips); }
-    function scoreMetric(row) { return round((row.expectancy * 45) + (Math.min(row.pf, 10) * 18) + (Math.log(Math.max(row.count, 1)) * 9) + ((row.winRate - 50) * 1.2) + (row.totalPips / 80), 2); }
-    function sampleWarning(count) { if (count < 10) return "危険"; if (count < 30) return "かなり少ない"; if (count < 50) return "少ない"; if (count < 100) return "注意"; return "良好"; }
-    function warningHtml(text) { const cls = text === "良好" ? "good" : text === "注意" ? "warn" : "bad"; return `<span class="${cls}">${escapeHtml(text)}</span>`; }
-    function heatClass(rate) { if (!Number.isFinite(rate)) return ""; if (rate >= 58) return "heat-high"; if (rate <= 45) return "heat-low"; return "heat-mid"; }
+    function simulateTpSl(bars, index, direction, tp, sl, maxMin) {
+      const entry = bars[index].close;
+      for (let i = index + 1; i <= Math.min(index + maxMin, bars.length - 1); i++) {
+        if (direction === "buy") {
+          if ((entry - bars[i].low) * PIP >= sl) return -sl;
+          if ((bars[i].high - entry) * PIP >= tp) return tp;
+        } else {
+          if ((bars[i].high - entry) * PIP >= sl) return -sl;
+          if ((entry - bars[i].low) * PIP >= tp) return tp;
+        }
+      }
+      const close = bars[Math.min(index + maxMin, bars.length - 1)].close;
+      return round(direction === "buy" ? (close - entry) * PIP : (entry - close) * PIP, 2);
+    }
 
+    function downloadJson() {
+      if (!resultJson) return;
+      const blob = new Blob([JSON.stringify(resultJson, null, 2)], { type:"application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = "finder_results_v2_2.json";
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }
+
+    function tableHtml(rows, headers, mapper, trusted) {
+      if (!rows.length) return "該当データがありません。";
+      return `<table><thead><tr>${headers.map(h => `<th>${escapeHtml(h)}</th>`).join("")}</tr></thead><tbody>${rows.map(row => `<tr>${mapper(row).map(cell => `<td class="${String(cell).includes('%') ? heatClass(parseFloat(cell)) : ''}">${trusted ? cell : escapeHtml(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+    }
+
+    function pills(items) { return items.map(x => `<span class="pill">${escapeHtml(x)}</span>`).join(" "); }
+    function heatClass(rate) { if (!Number.isFinite(rate)) return ""; if (rate >= 60) return "heat-high"; if (rate <= 45) return "heat-low"; return "heat-mid"; }
+    function futureMax(bars, index, direction, minutes) {
+      const entry = bars[index].close; let fav = 0, adv = 0;
+      for (let i = index + 1; i <= Math.min(index + minutes, bars.length - 1); i++) {
+        if (direction === "buy") { fav = Math.max(fav, (bars[i].high - entry) * PIP); adv = Math.min(adv, (bars[i].low - entry) * PIP); }
+        else { fav = Math.max(fav, (entry - bars[i].low) * PIP); adv = Math.min(adv, (entry - bars[i].high) * PIP); }
+      }
+      return { fav:round(fav,2), adv:round(adv,2) };
+    }
     function classifyBb(bar) {
-      const range = bar.bbUpper - bar.bbLower;
-      const near = range * 0.12;
+      const range = bar.bbUpper - bar.bbLower, near = range * .12;
       if (bar.close > bar.bbUpper) return "上バンド超え";
       if (bar.bbUpper - bar.close <= near) return "上バンド付近";
       if (bar.close < bar.bbLower) return "下バンド割れ";
@@ -861,29 +555,36 @@
       return bar.close > bar.bbMid ? "ミドル上" : "ミドル下";
     }
     function getSession(date) { const h = date.getHours(); if (h >= 6 && h <= 14) return "東京"; if (h >= 15 && h <= 17) return "ロンドン前半"; if (h >= 18 && h <= 20) return "ロンドン後半"; if (h >= 21 && h <= 23) return "NY前半"; if (h >= 0 && h <= 2) return "NY後半"; return "深夜"; }
-    function recentPips(bars, i, n) { return i >= n ? round((bars[i].close - bars[i - n].close) * PIP, 2) : 0; }
-    function consecutive(bars, i, type) { let count = 0; for (let j = i; j >= 0; j--) { const bull = bars[j].close >= bars[j].open; if ((type === "bull" && bull) || (type === "bear" && !bull)) count++; else break; } return count; }
-    function calcRsi(gain, loss) { if (loss === 0) return 100; const rs = gain / loss; return round(100 - 100 / (1 + rs), 1); }
-    function bucketRsi(v) { if (!Number.isFinite(v)) return "不足"; if (v < 30) return "30未満"; if (v < 40) return "30〜40"; if (v < 50) return "40〜50"; if (v < 60) return "50〜60"; if (v < 70) return "60〜70"; return "70以上"; }
-    function bucketEma(v) { if (v < 0.5) return "0〜0.5"; if (v < 1) return "0.5〜1"; if (v < 2) return "1〜2"; if (v < 3) return "2〜3"; return "3以上"; }
-    function bucketPips(v, cuts) { if (v <= cuts[0]) return `${cuts[0]}以下`; for (let i = 0; i < cuts.length - 1; i++) if (v > cuts[i] && v <= cuts[i + 1]) return `${cuts[i]}〜${cuts[i + 1]}`; return `${cuts[cuts.length - 1]}以上`; }
-    function bucketCount(v) { if (v <= 0) return "0"; if (v === 1) return "1"; if (v === 2) return "2"; if (v === 3) return "3"; if (v <= 5) return "4〜5"; return "6以上"; }
     function bucketVol(v) { if (v < 1) return "0〜1"; if (v < 2) return "1〜2"; if (v < 3) return "2〜3"; if (v < 5) return "3〜5"; return "5以上"; }
-
+    function recentPips(bars, i, n) { return i >= n ? round((bars[i].close - bars[i - n].close) * PIP, 2) : 0; }
+    function calcRsi(gain, loss) { if (loss === 0) return 100; const rs = gain / loss; return round(100 - 100 / (1 + rs), 1); }
+    function parseCsv(text) {
+      const rows = []; let row = [], cell = "", quote = false;
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i], next = text[i + 1];
+        if (quote && ch === '"' && next === '"') { cell += '"'; i++; continue; }
+        if (ch === '"') { quote = !quote; continue; }
+        if (!quote && ch === ",") { row.push(cell); cell = ""; continue; }
+        if (!quote && (ch === "\n" || ch === "\r")) { if (ch === "\r" && next === "\n") i++; row.push(cell); rows.push(row); row = []; cell = ""; continue; }
+        cell += ch;
+      }
+      row.push(cell); rows.push(row); return rows;
+    }
     function normalizeHeader(v) { return String(v || "").trim().toLowerCase().replace(/\s+/g, "_"); }
-    function findHeader(headers, names) { for (const name of names) { const idx = headers.indexOf(String(name).toLowerCase()); if (idx >= 0) return idx; } return -1; }
-    function parseDate(value) { const raw = String(value || "").trim().replace(/\./g, "-").replace("T", " "); const m = raw.match(/^(\d{4})-(\d{1,2})-(\d{1,2})\s+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?/); if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]), Number(m[4]), Number(m[5]), Number(m[6] || 0)); const d = new Date(raw); return Number.isFinite(d.getTime()) ? d : null; }
+    function findHeader(headers, names) { for (const name of names) { const i = headers.indexOf(String(name).toLowerCase()); if (i >= 0) return i; } return -1; }
+    function parseDate(value) { const raw = String(value || "").trim().replace(/\./g, "-").replace("T", " "); const m = raw.match(/^(\d{4})-(\d{1,2})-(\d{1,2})\s+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?/); if (m) return new Date(Number(m[1]), Number(m[2])-1, Number(m[3]), Number(m[4]), Number(m[5]), Number(m[6] || 0)); const d = new Date(raw); return Number.isFinite(d.getTime()) ? d : null; }
     function toNumber(v) { const n = Number(String(v ?? "").replace(/,/g, "").trim()); return Number.isFinite(n) ? n : NaN; }
     function average(arr) { return arr.length ? sum(arr) / arr.length : 0; }
-    function sum(arr) { return arr.reduce((a, b) => a + Number(b || 0), 0); }
+    function sum(arr) { return arr.reduce((a,b) => a + Number(b || 0), 0); }
     function round(v, d = 2) { return Number(Number(v || 0).toFixed(d)); }
-    function fmt(v) { return Number.isFinite(Number(v)) ? Number(v).toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--"; }
+    function fmt(v) { return Number.isFinite(Number(v)) ? Number(v).toLocaleString(undefined, { maximumFractionDigits:2 }) : "--"; }
     function pct(v) { return `${fmt(v)}%`; }
     function pips(v) { return `${Number(v) >= 0 ? "+" : ""}${fmt(v)}pips`; }
     function signed(v) { return `${Number(v) >= 0 ? "+" : ""}${fmt(v)}`; }
-    function formatDateTime(d) { return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+    function formatDateTime(d) { return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`; }
     function pad(v) { return String(v).padStart(2, "0"); }
     function setStatus(text) { document.getElementById("status").textContent = text; }
+    function breathe() { return new Promise(resolve => setTimeout(resolve, 0)); }
     function escapeHtml(v) { return String(v ?? "").replace(/[&<>"]/g, s => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[s])); }
   </script>
 </body>
