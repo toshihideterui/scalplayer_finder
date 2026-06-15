@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="scalplayer-version" content="finder-v2.0">
-  <title>ScalpLayer Finder v2.0</title>
+  <meta name="scalplayer-version" content="finder-v2.1">
+  <title>ScalpLayer Finder v2.1</title>
   <style>
     :root {
       --bg: #05070d; --panel: #10131c; --panel2: #151a25; --line: rgba(212,175,55,.28);
@@ -63,7 +63,7 @@
 <body>
   <main class="container">
     <section class="hero">
-      <h1>ScalpLayer Finder v2.0</h1>
+      <h1>ScalpLayer Finder v2.1</h1>
       <p class="sub">USDJPY M1 CSVだけから、新しいBUY/SELL売買ポイント候補を発見する研究専用ツールです。</p>
     </section>
 
@@ -90,7 +90,7 @@
           </select>
         </div>
       </div>
-      <button id="runBtn" onclick="runFinder()">Finder v2.0 分析実行</button>
+      <button id="runBtn" onclick="runFinder()">Finder v2.1 分析実行</button>
       <div id="status" class="small">CSVを選択してください。重い処理中は進捗を表示します。</div>
     </section>
 
@@ -126,7 +126,19 @@
     </section>
 
     <section class="card">
-      <h2>⑦ Core Entry Candidate TOP10</h2>
+      <h2>⑦ Core Candidate</h2>
+      <div id="coreCandidate" class="tableWrap small">分析後に表示します。</div>
+      <h2 style="margin-top:20px;">Core Entry Candidate TOP10</h2>
+      <div class="two">
+        <div>
+          <h3>BUY候補</h3>
+          <div id="buyCandidates" class="tableWrap small">--</div>
+        </div>
+        <div>
+          <h3>SELL候補</h3>
+          <div id="sellCandidates" class="tableWrap small">--</div>
+        </div>
+      </div>
       <div id="candidateTop10" class="tableWrap small">分析後に表示します。</div>
     </section>
 
@@ -200,14 +212,14 @@
         const bestSellConditions = conditionRanking.filter(r => r.direction === "sell" && r.count >= 30).slice(0, 20);
         setStatus("Core Entry Candidate TOP10を生成中...");
         await breathe();
-        const candidateTop10 = buildCandidates([...combinationRanking, ...conditionRanking], entries).slice(0, 10);
+        const candidateTop10 = buildCandidatesV21([...combinationRanking, ...conditionRanking], entries).slice(0, 10);
         const backtestResults = buildBacktests(candidateTop10, entries, parsed.bars);
         const walkForwardResults = buildWalkForward(candidateTop10, trainEntries, testEntries);
-        const finalJudgement = judgeFinal(candidateTop10, walkForwardResults);
-        const warnings = buildWarnings(candidateTop10, walkForwardResults);
+        const finalJudgement = judgeFinalV21(candidateTop10, walkForwardResults);
+        const warnings = buildWarningsV21(candidateTop10, walkForwardResults);
         finderResults = {
           meta: {
-            appVersion: "finder-v2.0",
+            appVersion: "finder-v2.1",
             symbol: "USDJPY",
             timeframe: "M1",
             sourceFileName: file.name,
@@ -224,13 +236,16 @@
           bestSellConditions,
           conditionRanking: conditionRanking.slice(0, 160),
           combinationRanking,
+          coreCandidate: candidateTop10[0] || null,
+          buyCandidates: candidateTop10.filter(c => c.direction === "BUY"),
+          sellCandidates: candidateTop10.filter(c => c.direction === "SELL"),
           candidateTop10,
           backtestResults,
           walkForwardResults,
           finalJudgement,
           warnings
         };
-        renderAll(parsed, entries);
+        renderAllV21(parsed, entries);
         document.getElementById("downloadBtn").disabled = false;
         setStatus("分析完了。finder_results.jsonを出力できます。");
       } catch (error) {
@@ -494,6 +509,82 @@
       return row.count >= 50 && row.pf >= 1.3 && row.expectancy >= 0.5 && row.effectiveExpectancy > 0;
     }
 
+    function buildCandidatesV21(rows, entries) {
+      const rawCandidates = [];
+      rows.filter(isCandidateSeed).sort(candidateSeedSort).forEach(row => {
+        const conditionCount = row.condition.split(" + ").length;
+        if (conditionCount < 2 || conditionCount > 3) return;
+        const bestHold = HORIZONS.map(h => evaluateCondition(entries, row.direction, row.condition, h)).filter(Boolean).sort(candidateSeedSort)[0] || row;
+        const candidate = {
+          direction: row.direction.toUpperCase(),
+          conditions: normalizeCandidateConditions(row.condition.split(" + ")),
+          count: bestHold.count,
+          winRate: bestHold.winRate,
+          pf: bestHold.pf,
+          expectancy: bestHold.expectancy,
+          effectiveExpectancy: round(bestHold.expectancy - 2, 2),
+          totalPips: bestHold.totalPips,
+          recommendedHoldMinutes: bestHold.horizon,
+          takeProfitGuide: `+${Math.max(3, Math.min(10, Math.round(row.avgMaxFavorable || 3)))}pips`,
+          stopLossGuide: `-${Math.max(3, Math.min(8, Math.round(Math.abs(row.avgMaxAdverse || -3))))}pips`,
+          sampleWarning: sampleWarning(bestHold.count),
+          note: bestHold.count < 100 ? "サンプル数に注意。別期間・1年分CSVで再検証推奨。" : "サンプル良好。ただしスプレッド込みで継続検証推奨。",
+          score: scoreMetric(bestHold),
+          conditionCount
+        };
+        if (candidate.effectiveExpectancy <= 0) return;
+        rawCandidates.push(candidate);
+      });
+      return mergeSimilarCandidates(rawCandidates)
+        .sort(candidateDisplaySort)
+        .slice(0, 10)
+        .map((c, i) => ({ rank: i + 1, name: `Candidate ${String.fromCharCode(65 + i)}`, ...c }));
+    }
+
+    function normalizeCandidateConditions(conditions) {
+      return [...new Set(conditions.map(c => String(c).trim()).filter(Boolean))].sort();
+    }
+
+    function mergeSimilarCandidates(candidates) {
+      const merged = [];
+      candidates.forEach(candidate => {
+        const duplicateIndex = merged.findIndex(existing => isSimilarCandidate(existing, candidate));
+        if (duplicateIndex < 0) {
+          merged.push(candidate);
+          return;
+        }
+        const current = merged[duplicateIndex];
+        const winner = candidateDisplaySort(candidate, current) < 0 ? candidate : current;
+        const loser = winner === candidate ? current : candidate;
+        merged[duplicateIndex] = {
+          ...winner,
+          mergedFrom: [...(winner.mergedFrom || []), loser.conditions.join(" + ")],
+          note: `${winner.note} 類似候補を統合済み。`
+        };
+      });
+      return merged;
+    }
+
+    function isSimilarCandidate(a, b) {
+      if (a.direction !== b.direction) return false;
+      const setA = new Set(a.conditions);
+      const setB = new Set(b.conditions);
+      const intersection = [...setA].filter(x => setB.has(x)).length;
+      const smaller = Math.min(setA.size, setB.size);
+      const union = new Set([...setA, ...setB]).size;
+      return intersection === smaller || intersection / union >= 0.67;
+    }
+
+    function candidateSeedSort(a, b) {
+      const aCount = String(a.condition || "").split(" + ").length;
+      const bCount = String(b.condition || "").split(" + ").length;
+      return (aCount - bCount) || rankSort(a, b);
+    }
+
+    function candidateDisplaySort(a, b) {
+      return (a.conditionCount - b.conditionCount) || (b.effectiveExpectancy - a.effectiveExpectancy) || (b.pf - a.pf) || (b.count - a.count);
+    }
+
     function evaluateCondition(entries, direction, condition, horizon) {
       const labels = condition.split(" + ");
       const map = new Map();
@@ -539,7 +630,8 @@
           trainExpectancy: train.expectancy,
           testExpectancy: test.expectancy,
           degradationRate: degradation,
-          judgement
+          sampleWarning: test.count < 30 ? "検証件数30未満：警告" : sampleWarning(test.count),
+          judgement: test.count < 30 ? "検証不足" : judgement
         };
       });
     }
@@ -565,6 +657,93 @@
       });
       if (!candidates.length) warnings.push("Core Entry Candidate基準を満たす候補がありません。");
       return warnings;
+    }
+
+    function judgeFinalV21(candidates, wfRows) {
+      const best = candidates[0];
+      if (!best) {
+        return { rank: "D", label: "優位性なし", reason: "スプレッド2pips後でも期待値プラスになる重複統合済み候補がありません。" };
+      }
+      const wf = wfRows.find(r => r.candidate === best.name);
+      if (best.count >= 100 && best.pf >= 1.3 && best.effectiveExpectancy > 0 && wf && wf.testCount >= 30 && wf.testPF >= 1.2 && wf.testExpectancy > 0) {
+        return { rank: "A", label: "有望候補あり", reason: `${best.name} は条件数${best.conditions.length}、件数${best.count}、PF${best.pf}、スプレッド後期待値${signed(best.effectiveExpectancy)}pips、検証期間PF${wf.testPF}です。` };
+      }
+      if (best.effectiveExpectancy > 0 && wf && wf.testExpectancy > 0) {
+        return { rank: "B", label: "検証継続", reason: `${best.name} はスプレッド後もプラスですが、Walk Forwardの件数またはPFに注意が必要です。` };
+      }
+      return { rank: "C", label: "弱い候補のみ", reason: "候補はありますが、実戦候補としてはまだ弱いです。" };
+    }
+
+    function buildWarningsV21(candidates, wfRows) {
+      const warnings = [];
+      candidates.forEach(c => {
+        if (c.count < 100) warnings.push(`${c.name}: 件数${c.count}は${c.sampleWarning}。PFが高くても過剰最適化に注意。`);
+        if (c.effectiveExpectancy <= 0) warnings.push(`${c.name}: スプレッド2pips後の期待値がプラスではありません。`);
+        const wf = wfRows.find(r => r.candidate === c.name);
+        if (wf && wf.testCount < 30) warnings.push(`${c.name}: Walk Forward Testの検証件数が30未満です。`);
+        if (wf && wf.testPF < 1) warnings.push(`${c.name}: 検証期間PFが1未満のため過剰最適化疑い。`);
+      });
+      if (!candidates.length) warnings.push("Core Entry Candidate基準を満たす候補がありません。");
+      return warnings;
+    }
+
+    function renderAllV21(parsed, entries) {
+      const r = finderResults;
+      document.getElementById("summary").innerHTML = `
+        <div class="stat"><span>読み込み本数</span><strong>${r.meta.loadedRows.toLocaleString()}</strong></div>
+        <div class="stat"><span>期間</span><strong>${escapeHtml(r.meta.startTime)}<br>${escapeHtml(r.meta.endTime)}</strong></div>
+        <div class="stat"><span>欠損行数</span><strong>${r.meta.missingRows.toLocaleString()}</strong></div>
+        <div class="stat"><span>解析対象本数</span><strong>${r.meta.analyzedBars.toLocaleString()}</strong></div>
+      `;
+      document.getElementById("finalJudgement").innerHTML = `<strong>${escapeHtml(r.finalJudgement.rank)}：${escapeHtml(r.finalJudgement.label)}</strong><br><span class="small">${escapeHtml(r.finalJudgement.reason)}</span>`;
+      renderRankV21("bestBuy", r.bestBuyConditions);
+      renderRankV21("bestSell", r.bestSellConditions);
+      renderRankV21("comboRanking", r.combinationRanking);
+      renderCoreCandidate(r.coreCandidate);
+      renderCandidatesBySide("buyCandidates", r.buyCandidates);
+      renderCandidatesBySide("sellCandidates", r.sellCandidates);
+      renderCandidatesV21(r.candidateTop10);
+      renderBacktestsV21(r.backtestResults);
+      renderWalkForwardV21(r.walkForwardResults);
+    }
+
+    function renderRankV21(id, rows) {
+      document.getElementById(id).innerHTML = tableHtml(rows, ["順位", "方向", "条件", "件数", "勝率", "PF", "期待値", "総pips", "サンプル警告"], (row, i) => [
+        i + 1, row.direction.toUpperCase(), row.condition, row.count, pct(row.winRate), fmt(row.pf), pips(row.expectancy), pips(row.totalPips), warningHtml(row.sampleWarning)
+      ], true);
+    }
+
+    function renderCoreCandidate(row) {
+      const target = document.getElementById("coreCandidate");
+      if (!target) return;
+      if (!row) { target.textContent = "Core Candidateはありません。"; return; }
+      target.innerHTML = tableHtml([row], ["候補名", "BUY/SELL", "条件", "件数", "勝率", "PF", "期待値", "スプレッド後", "推奨保有", "注意点"], c => [
+        c.name, c.direction, c.conditions.map(x => `<span class="pill">${escapeHtml(x)}</span>`).join(" "), c.count, pct(c.winRate), fmt(c.pf), pips(c.expectancy), pips(c.effectiveExpectancy), `${c.recommendedHoldMinutes}分`, `${warningHtml(c.sampleWarning)} ${escapeHtml(c.note || "")}`
+      ], true);
+    }
+
+    function renderCandidatesBySide(id, rows) {
+      document.getElementById(id).innerHTML = tableHtml(rows, ["順位", "候補名", "条件", "件数", "勝率", "PF", "スプレッド後", "注意点"], row => [
+        row.rank, row.name, row.conditions.map(c => `<span class="pill">${escapeHtml(c)}</span>`).join(" "), row.count, pct(row.winRate), fmt(row.pf), pips(row.effectiveExpectancy), warningHtml(row.sampleWarning)
+      ], true);
+    }
+
+    function renderCandidatesV21(rows) {
+      document.getElementById("candidateTop10").innerHTML = tableHtml(rows, ["順位", "候補名", "BUY/SELL", "条件", "条件数", "件数", "勝率", "PF", "期待値", "スプレッド差引後", "総pips", "推奨保有", "利確", "損切り", "注意点"], row => [
+        row.rank, row.name, row.direction, row.conditions.map(c => `<span class="pill">${escapeHtml(c)}</span>`).join(" "), row.conditions.length, row.count, pct(row.winRate), fmt(row.pf), pips(row.expectancy), pips(row.effectiveExpectancy), pips(row.totalPips), `${row.recommendedHoldMinutes}分`, row.takeProfitGuide, row.stopLossGuide, `${warningHtml(row.sampleWarning)} ${escapeHtml(row.note || "")}`
+      ], true);
+    }
+
+    function renderBacktestsV21(rows) {
+      document.getElementById("backtestResults").innerHTML = tableHtml(rows, ["候補名", "テスト条件", "件数", "勝率", "PF", "期待値", "総pips"], row => [
+        row.candidate, row.test, row.count, pct(row.winRate), fmt(row.pf), pips(row.expectancy), pips(row.totalPips)
+      ], false);
+    }
+
+    function renderWalkForwardV21(rows) {
+      document.getElementById("walkForwardResults").innerHTML = tableHtml(rows, ["候補名", "探索件数", "検証件数", "探索PF", "検証PF", "探索期待値", "検証期待値", "劣化率", "警告", "採用可否"], row => [
+        row.candidate, row.trainCount, row.testCount, fmt(row.trainPF), fmt(row.testPF), pips(row.trainExpectancy), pips(row.testExpectancy), `${fmt(row.degradationRate)}%`, row.sampleWarning, row.judgement
+      ], false);
     }
 
     function renderAll(parsed, entries) {
